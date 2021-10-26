@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(Health))]
 
-public class SliderChanger : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
-    [SerializeField] private PlayerHealth _player;
+    [SerializeField] private Health _player;
 
     private bool isCoroutineWorking = false;
 
     private void OnEnable()
     {
-        _player.HealthChanged += OnHealthChanged;
+        _player.Changed += OnChanged;
     }
 
     private void OnDisable()
     {
-        _player.HealthChanged -= OnHealthChanged;
+        _player.Changed -= OnChanged;
     }
 
-    private void OnHealthChanged()
+    private void OnChanged()
     {
         if (isCoroutineWorking == false)
         {

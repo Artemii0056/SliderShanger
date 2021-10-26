@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerHealth : MonoBehaviour
+public class Health : MonoBehaviour
 {
     private float _current = 0;
     private float _max = 100;
@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
 
     public float Current => _current;
 
-    public event UnityAction HealthChanged;
+    public event UnityAction Changed;
 
     public void TakeDamage(float damage)
     {
@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
             _current = _min;     
         }
 
-        HealthChanged?.Invoke();
+        Changed?.Invoke();
     }
 
     public void TakeHealth(float health)
@@ -34,6 +34,6 @@ public class PlayerHealth : MonoBehaviour
             _current = _max;
         }
 
-        HealthChanged?.Invoke();
+        Changed?.Invoke();
     }
 }
