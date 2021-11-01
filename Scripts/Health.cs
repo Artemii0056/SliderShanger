@@ -5,11 +5,13 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] private float _max;
+    [SerializeField] private float _min;
+
     private float _current = 0;
-    private float _max = 100;
-    private float _min = 0;
 
     public float Current => _current;
+    public float MaxValue => _max;
 
     public event UnityAction Changed;
 

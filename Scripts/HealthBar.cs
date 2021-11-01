@@ -8,23 +8,24 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
-    [SerializeField] private Health _player;
+    [SerializeField] private Health _health;
+    [SerializeField] private float _maxDelta;
 
-    private bool isCoroutineWorking = false;
+    private bool _isCoroutineWorking = false;
 
     private void OnEnable()
     {
-        _player.Changed += OnChanged;
+        _health.Changed += OnChanged;
     }
 
     private void OnDisable()
     {
-        _player.Changed -= OnChanged;
+        _health.Changed -= OnChanged;
     }
 
     private void OnChanged()
     {
-        if (isCoroutineWorking == false)
+        if (_isCoroutineWorking == false)
         {
             var changerJob = StartCoroutine(ChangeSlider());
         }
@@ -32,15 +33,14 @@ public class HealthBar : MonoBehaviour
 
     private IEnumerator ChangeSlider()
     {
-        isCoroutineWorking = true;
+        _isCoroutineWorking = true;
 
-        while (_slider.value != _player.Current)
-        {
-            float maxDelta = 20f;
-            _slider.value = Mathf.MoveTowards(_slider.value, _player.Current, maxDelta * Time.deltaTime);
+        while (_slider.value != _health.Current)
+        {           
+            _slider.value = Mathf.MoveTowards(_slider.value, _health.Current / _health.MaxValue, _maxDelta * Time.deltaTime);
             yield return null;
         }
 
-        isCoroutineWorking = false;
+        _isCoroutineWorking = false;
     }
 }
